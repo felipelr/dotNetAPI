@@ -5,7 +5,8 @@ namespace Strab.Domain.Repositories
 {
     public interface IBaseRepository<T>
     {
-        void Save(T entity);
+        void Create(T entity);
+        void Update(T entity);
         T GetById(long id);
         IEnumerable<T> GetAll();
     }

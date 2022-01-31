@@ -2,12 +2,10 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace Strab.Domain.Entities
 {
     [Table("Users")]
-    [Index(nameof(Email), IsUnique = true)]
     public class User
     {
         public User()
@@ -35,19 +33,19 @@ namespace Strab.Domain.Entities
         public long Id { get; private set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
-        [MaxLength(20, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]
+        [MaxLength(255, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]
         [MinLength(3, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]
         public string Email { get; private set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
-        [MaxLength(20, ErrorMessage = "Este campo deve conter entre 3 e 20 caracteres")]
+        [MaxLength(255, ErrorMessage = "Este campo deve conter entre 3 e 20 caracteres")]
         [MinLength(3, ErrorMessage = "Este campo deve conter entre 3 e 20 caracteres")]
         public string Password { get; private set; }
 
-        [MaxLength(150, ErrorMessage = "Este campo deve conter no máximo 150 caracteres")]
+        [MaxLength(255, ErrorMessage = "Este campo deve conter no máximo 150 caracteres")]
         public string FacebookToken { get; private set; }
 
-        [MaxLength(150, ErrorMessage = "Este campo deve conter no máximo 150 caracteres")]
+        [MaxLength(255, ErrorMessage = "Este campo deve conter no máximo 150 caracteres")]
         public string GoogleToken { get; private set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
