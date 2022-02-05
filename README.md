@@ -1,2 +1,2 @@
 ﻿# complete dotnet api com jwt
- commands -> acoes que a api realiza
+ commands -> ações que a api realiza
