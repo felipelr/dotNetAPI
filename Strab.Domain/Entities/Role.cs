@@ -6,10 +6,6 @@ namespace Strab.Domain.Entities
     [Table("Roles")]
     public class Role
     {
-        public Role()
-        {
-
-        }
         public Role(int id, string displayName, string name)
         {
             Id = id;

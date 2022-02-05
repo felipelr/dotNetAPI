@@ -10,9 +10,7 @@ namespace Strab.Domain.Entities
     {
         public User()
         {
-
         }
-
         public User(long id, string email, string password, string facebookToken, string googleToken, bool active, DateTime created, DateTime modified, int roleId, Role role, string platform, string platformVersion)
         {
             Id = id;
@@ -27,6 +25,11 @@ namespace Strab.Domain.Entities
             Role = role;
             Platform = platform;
             PlatformVersion = platformVersion;
+        }
+
+        public void ClearPassword()
+        {
+            Password = "";
         }
 
         [Key]

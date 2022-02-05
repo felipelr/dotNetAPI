@@ -29,12 +29,20 @@ namespace Strab.Domain.Infra.Repositories
 
         public IEnumerable<User> GetAll()
         {
-            return _context.Users.Where(x => x.Active == true).OrderBy(x => x.Email);
+            return _context.Users.AsNoTracking().Where(x => x.Active == true).OrderBy(x => x.Email);
         }
 
         public User GetById(long id)
         {
             return _context.Users.FirstOrDefault(x => x.Id == id);
+        }
+
+        public User Login(string email, string password)
+        {
+            return _context.Users
+            .AsNoTracking()
+            .Include(x => x.Role)
+            .FirstOrDefault(x => x.Email == email && x.Password == password);
         }
     }
 }
