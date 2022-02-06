@@ -11,7 +11,7 @@ namespace Strab.Domain.Entities
         public User()
         {
         }
-        public User(long id, string email, string password, string facebookToken, string googleToken, bool active, DateTime created, DateTime modified, int roleId, Role role, string platform, string platformVersion)
+        public User(long id, string email, string password, string facebookToken, string googleToken, bool active, DateTime created, DateTime modified, Role role, string platform, string platformVersion)
         {
             Id = id;
             Email = email;
@@ -21,10 +21,12 @@ namespace Strab.Domain.Entities
             Active = active;
             Created = created;
             Modified = modified;
-            RoleId = roleId;
             Role = role;
             Platform = platform;
             PlatformVersion = platformVersion;
+
+            if (role != null)
+                RoleId = role.Id;
         }
 
         public void ClearPassword()
@@ -36,19 +38,19 @@ namespace Strab.Domain.Entities
         public long Id { get; private set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
-        [MaxLength(255, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]
-        [MinLength(3, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]
+        [MaxLength(255, ErrorMessage = "Este campo deve conter entre 3 e 255 caracteres")]
+        [MinLength(3, ErrorMessage = "Este campo deve conter entre 3 e 255 caracteres")]
         public string Email { get; private set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
-        [MaxLength(255, ErrorMessage = "Este campo deve conter entre 3 e 20 caracteres")]
-        [MinLength(3, ErrorMessage = "Este campo deve conter entre 3 e 20 caracteres")]
+        [MaxLength(255, ErrorMessage = "Este campo deve conter entre 3 e 255 caracteres")]
+        [MinLength(3, ErrorMessage = "Este campo deve conter entre 3 e 255 caracteres")]
         public string Password { get; private set; }
 
-        [MaxLength(255, ErrorMessage = "Este campo deve conter no máximo 150 caracteres")]
+        [MaxLength(255, ErrorMessage = "Este campo deve conter no máximo 255 caracteres")]
         public string FacebookToken { get; private set; }
 
-        [MaxLength(255, ErrorMessage = "Este campo deve conter no máximo 150 caracteres")]
+        [MaxLength(255, ErrorMessage = "Este campo deve conter no máximo 255 caracteres")]
         public string GoogleToken { get; private set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
