@@ -38,6 +38,8 @@ builder.Services.AddDbContext<StrabContext>(options => options.UseMySql(connecti
 
 //dependencias dos repositorios
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IClientRepository, ClientRepository>();
+builder.Services.AddTransient<IProfessionalRepository, ProfessionalRepository>();
 
 //dependencias dos handlers
 

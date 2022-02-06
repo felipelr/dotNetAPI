@@ -12,13 +12,6 @@ namespace Strab.Domain.Api.Controllers;
 [Authorize]
 public class UsersController : ControllerBase
 {
-    private readonly ILogger<UsersController> _logger;
-
-    public UsersController(ILogger<UsersController> logger)
-    {
-        _logger = logger;
-    }
-
     [HttpGet(Name = "")]
     [Authorize(Roles = "ADM")]
     public IEnumerable<User> GetAll([FromServices] IUserRepository userRepository)

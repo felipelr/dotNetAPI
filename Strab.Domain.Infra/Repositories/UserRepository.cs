@@ -27,6 +27,12 @@ namespace Strab.Domain.Infra.Repositories
             _context.SaveChanges();
         }
 
+        public void Delete(User entity)
+        {
+            _context.Users.Remove(entity);
+            _context.SaveChanges();
+        }
+
         public IEnumerable<User> GetAll()
         {
             return _context.Users.AsNoTracking().Where(x => x.Active == true).OrderBy(x => x.Email);

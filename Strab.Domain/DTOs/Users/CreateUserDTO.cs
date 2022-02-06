@@ -21,5 +21,6 @@ namespace Strab.Domain.DTOs.Users
         public int RoleId { get; set; }
         public string Platform { get; set; }
         public string PlatformVersion { get; set; }
+        public string UserType { get; set; }
     }
 }
