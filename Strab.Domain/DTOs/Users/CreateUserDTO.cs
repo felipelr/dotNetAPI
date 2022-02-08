@@ -5,6 +5,29 @@ namespace Strab.Domain.DTOs.Users
 {
     public class CreateUserDTO
     {
+        public CreateUserDTO()
+        {
+
+        }
+        public CreateUserDTO(string name, string document, DateTime dateBirth, string gender, string description, string phone, string photo, string backImage, string email, string password, string facebookToken, string googleToken, int roleId, string platform, string platformVersion, string userType)
+        {
+            Name = name;
+            Document = document;
+            DateBirth = dateBirth;
+            Gender = gender;
+            Description = description;
+            Phone = phone;
+            Photo = photo;
+            BackImage = backImage;
+            Email = email;
+            Password = password;
+            FacebookToken = facebookToken;
+            GoogleToken = googleToken;
+            RoleId = roleId;
+            Platform = platform;
+            PlatformVersion = platformVersion;
+            UserType = userType;
+        }
 
         public string Name { get; set; }
         public string Document { get; set; }

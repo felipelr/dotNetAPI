@@ -1,7 +1,6 @@
 using Strab.Domain.Commands.Interfaces;
 using Flunt.Notifications;
 using Flunt.Validations;
-using Strab.Domain.Entities;
 using Strab.Domain.DTOs.Users;
 
 namespace Strab.Domain.Commands.Users
@@ -22,18 +21,23 @@ namespace Strab.Domain.Commands.Users
 
         public void Validate()
         {
+            AddNotifications(new CreateUserDTOContract(CreateUserDTO));
+        }
+    }
+
+    public class CreateUserDTOContract : Contract<CreateUserDTO>
+    {
+        public CreateUserDTOContract(CreateUserDTO dto)
+        {
             DateTime minDateBirth = DateTime.Now.AddYears(-18);
-            AddNotifications(
-                new Contract<User>()
-                .Requires()
-                .IsEmail(CreateUserDTO.Email, "Email")
-                .IsGreaterThan(CreateUserDTO.Password, 8, "Password")
-                .IsGreaterThan(CreateUserDTO.RoleId, 0, "RoleId")
-                .IsNotEmpty(CreateUserDTO.Name, "Name")
-                .IsNotEmpty(CreateUserDTO.Document, "Document")
-                .IsNotEmpty(CreateUserDTO.Phone, "Phone")
-                .IsLowerOrEqualsThan(CreateUserDTO.DateBirth, minDateBirth, "DateBirth")
-            );
+            Requires()
+                .IsEmail(dto.Email, "Email")
+                .IsGreaterThan(dto.Password, 8, "Password")
+                .IsGreaterThan(dto.RoleId, 0, "RoleId")
+                .IsNotNullOrEmpty(dto.Name, "Name")
+                .IsNotNullOrEmpty(dto.Document, "Document")
+                .IsNotNullOrEmpty(dto.Phone, "Phone")
+                .IsLowerOrEqualsThan(dto.DateBirth, minDateBirth, "DateBirth");
         }
     }
 }
