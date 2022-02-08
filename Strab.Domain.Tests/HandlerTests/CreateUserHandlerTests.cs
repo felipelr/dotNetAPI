@@ -13,14 +13,14 @@ public class CreateUserHandlerTests
     private readonly CreateUserCommand _invalidCommand = new CreateUserCommand(new DTOs.Users.CreateUserDTO());
     private readonly CreateUserCommand _validCommand = new CreateUserCommand(new DTOs.Users.CreateUserDTO(
         "Felipe",
-        "42516423845",
+        "42516423844",
         DateTime.Now.AddYears(-28),
         "MASCULINO",
         "",
-        "18997642033",
+        "18997642035",
         "",
         "",
-        "felipe.lima.flr@gmail.com",
+        "felipe.fake@gmail.com",
         "1234567890",
         "",
         "",
