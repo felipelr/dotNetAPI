@@ -14,19 +14,20 @@ public class UsersController : ControllerBase
 {
     [HttpGet(Name = "")]
     [Authorize(Roles = "ADM")]
-    public IEnumerable<User> GetAll([FromServices] IUserRepository userRepository)
+    public async Task<ActionResult<IEnumerable<User>>> GetAll([FromServices] IUserRepository userRepository)
     {
-        return userRepository.GetAll();
+        var users = await userRepository.GetAll();
+        return Ok(users);
     }
 
     [HttpPost]
     [Route("login")]
     [AllowAnonymous]
-    public ActionResult<dynamic> Authenticate(
+    public async Task<ActionResult<dynamic>> Authenticate(
                     [FromServices] IUserRepository userRepository,
                     [FromBody] UserLogin model)
     {
-        var user = userRepository.Login(model.Email, model.Password);
+        var user = await userRepository.Login(model.Email, model.Password);
 
         if (user == null)
             return NotFound(new { message = "Usuário e/ou senha inválidos" });
@@ -35,10 +36,10 @@ public class UsersController : ControllerBase
         // Esconde a senha
         user.ClearPassword();
 
-        return new
+        return Ok(new
         {
             user = user,
             token = token
-        };
+        });
     }
 }
