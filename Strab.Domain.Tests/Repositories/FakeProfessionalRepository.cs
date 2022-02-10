@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Strab.Domain.Entities;
 using Strab.Domain.Repositories;
 
@@ -21,9 +22,12 @@ namespace Strab.Domain.Tests.Repositories
 
         }
 
-        public IEnumerable<Professional> GetAll()
+        public async Task<IEnumerable<Professional>> GetAll()
         {
-            return new List<Professional>();
+            Task<IEnumerable<Professional>> task = new Task<IEnumerable<Professional>>(() => new List<Professional>());
+            task.Start();
+            task.Wait();
+            return task.Result;
         }
 
         public Professional GetById(long id)

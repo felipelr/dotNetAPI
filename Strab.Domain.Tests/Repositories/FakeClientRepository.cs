@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Strab.Domain.Entities;
 using Strab.Domain.Repositories;
 
@@ -21,9 +22,12 @@ namespace Strab.Domain.Tests.Repositories
 
         }
 
-        public IEnumerable<Client> GetAll()
+        public async Task<IEnumerable<Client>> GetAll()
         {
-            return new List<Client>();
+            Task<IEnumerable<Client>> task = new Task<IEnumerable<Client>>(() => new List<Client>());
+            task.Start();
+            task.Wait();
+            return task.Result;
         }
 
         public Client GetById(long id)

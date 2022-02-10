@@ -5,7 +5,7 @@ using Strab.Domain.Commands.Users;
 using Strab.Domain.Handlers;
 using Strab.Domain.Tests.Repositories;
 
-namespace Strab.Domain.Tests.CommandTests;
+namespace Strab.Domain.Tests.HandlerTests;
 
 [TestClass]
 public class CreateUserHandlerTests
