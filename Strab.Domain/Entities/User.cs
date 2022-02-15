@@ -34,6 +34,11 @@ namespace Strab.Domain.Entities
             Password = "";
         }
 
+        public void SetHashedPassword(string passwordHashed)
+        {
+            Password = passwordHashed;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; private set; }

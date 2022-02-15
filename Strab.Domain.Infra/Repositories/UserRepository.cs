@@ -19,6 +19,8 @@ namespace Strab.Domain.Infra.Repositories
         public void Create(User entity)
         {
             _context.Users.Add(entity);
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(entity.Password);
+            entity.SetHashedPassword(passwordHash);
             _context.SaveChanges();
         }
 
@@ -46,10 +48,19 @@ namespace Strab.Domain.Infra.Repositories
 
         public async Task<User> Login(string email, string password)
         {
-            return await _context.Users
+            var user = await _context.Users
                 .AsNoTracking()
                 .Include(x => x.Role)
-                .FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
+                .FirstOrDefaultAsync(x => x.Email == email);
+
+            if (user != null)
+            {
+                bool verified = BCrypt.Net.BCrypt.Verify(password, user.Password);
+                if (verified)
+                    return user;
+            }
+
+            return null;
         }
     }
 }

@@ -35,7 +35,8 @@ namespace Strab.Domain.Tests.Repositories
 
         public async Task<User> Login(string email, string password)
         {
-            return await Task.FromResult<User>(new User(1, "felipe.lima.flr@gmail.com", "1234567890", "", "", true, DateTime.Now, DateTime.Now, new Role(1, "ADM", "ADM"), "", ""));
+            //senha sem o hash 1234567890
+            return await Task.FromResult<User>(new User(1, "felipe.lima.flr@gmail.com", "$2a$12$G5yQJhrhZSTplUv7UqKYWeMuGnoe1AcybWUE/JqG1W1yeF./v/MtO", "", "", true, DateTime.Now, DateTime.Now, new Role(1, "ADM", "ADM"), "", ""));
         }
     }
 }
