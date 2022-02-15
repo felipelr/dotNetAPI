@@ -4,6 +4,6 @@ namespace Strab.Domain.Repositories
 {
     public interface IUserRepository : IBaseRepository<User>
     {
-        public User Login(string email, string password);
+        public Task<User> Login(string email, string password);
     }
 }

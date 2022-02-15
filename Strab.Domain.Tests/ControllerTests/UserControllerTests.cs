@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Strab.Domain.Api.Controllers;
 using Strab.Domain.Entities;
@@ -12,13 +13,12 @@ public class UserControllerTests
 {
 
     [TestMethod]
-    public void DadoUmConsultaDeveRetornarStatus200()
+    public async Task DadoUmConsultaDeveRetornarStatus200()
     {
         FakeUserRepository userRepository = new FakeUserRepository();
         var sut = new UsersController();
-        var result = sut.GetAll(userRepository);
-        var users = result.Result.Result as IList<User>;
-
+        var result = await sut.GetAll(userRepository);
+        var users = result.Value as List<User>;
         Assert.AreEqual(users, null);
     }
 }

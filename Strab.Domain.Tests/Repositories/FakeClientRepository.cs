@@ -24,10 +24,7 @@ namespace Strab.Domain.Tests.Repositories
 
         public async Task<IEnumerable<Client>> GetAll()
         {
-            Task<IEnumerable<Client>> task = new Task<IEnumerable<Client>>(() => new List<Client>());
-            task.Start();
-            task.Wait();
-            return task.Result;
+            return await Task.FromResult<IEnumerable<Client>>(new List<Client>());
         }
 
         public Client GetById(long id)

@@ -33,9 +33,9 @@ namespace Strab.Domain.Infra.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<Professional> GetAll()
+        public async Task<IEnumerable<Professional>> GetAll()
         {
-            return _context.Professionals.AsNoTracking().Where(x => x.Active == true).OrderBy(x => x.Name);
+            return await new Task<IEnumerable<Professional>>(() => _context.Professionals.AsNoTracking().Where(x => x.Active == true).OrderBy(x => x.Name));
         }
 
         public Professional GetById(long id)

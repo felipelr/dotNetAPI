@@ -24,10 +24,7 @@ namespace Strab.Domain.Tests.Repositories
 
         public async Task<IEnumerable<Role>> GetAll()
         {
-            Task<IEnumerable<Role>> task = new Task<IEnumerable<Role>>(() => new List<Role>());
-            task.Start();
-            task.Wait();
-            return task.Result;
+            return await Task.FromResult<IEnumerable<Role>>(new List<Role>());
         }
 
         public Role GetById(long id)

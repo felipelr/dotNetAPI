@@ -9,6 +9,6 @@ namespace Strab.Domain.Repositories
         void Update(T entity);
         void Delete(T entity);
         T GetById(long id);
-        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAll();
     }
 }

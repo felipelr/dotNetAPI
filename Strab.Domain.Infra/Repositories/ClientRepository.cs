@@ -33,9 +33,9 @@ namespace Strab.Domain.Infra.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<Client> GetAll()
+        public async Task<IEnumerable<Client>> GetAll()
         {
-            return _context.Clients.AsNoTracking().Where(x => x.Active == true).OrderBy(x => x.Name);
+            return await new Task<IEnumerable<Client>>(() => _context.Clients.AsNoTracking().Where(x => x.Active == true).OrderBy(x => x.Name));
         }
 
         public Client GetById(long id)

@@ -35,6 +35,7 @@ namespace Strab.Domain.Entities
         }
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; private set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]

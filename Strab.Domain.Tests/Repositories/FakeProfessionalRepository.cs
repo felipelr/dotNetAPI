@@ -24,10 +24,7 @@ namespace Strab.Domain.Tests.Repositories
 
         public async Task<IEnumerable<Professional>> GetAll()
         {
-            Task<IEnumerable<Professional>> task = new Task<IEnumerable<Professional>>(() => new List<Professional>());
-            task.Start();
-            task.Wait();
-            return task.Result;
+            return await Task.FromResult<IEnumerable<Professional>>(new List<Professional>());
         }
 
         public Professional GetById(long id)

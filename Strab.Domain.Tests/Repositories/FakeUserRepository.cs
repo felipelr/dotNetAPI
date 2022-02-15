@@ -24,10 +24,7 @@ namespace Strab.Domain.Tests.Repositories
 
         public async Task<IEnumerable<User>> GetAll()
         {
-            Task<IEnumerable<User>> task = new Task<IEnumerable<User>>(() => new List<User>());
-            task.Start();
-            task.Wait();
-            return task.Result;
+            return await Task.FromResult<IEnumerable<User>>(new List<User>());
         }
 
         public User GetById(long id)
@@ -37,10 +34,7 @@ namespace Strab.Domain.Tests.Repositories
 
         public async Task<User> Login(string email, string password)
         {
-            Task<User> task = new Task<User>(() => new User());
-            task.Start();
-            task.Wait();
-            return task.Result;
+            return await Task.FromResult<User>(new User());
         }
     }
 }

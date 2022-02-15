@@ -2,6 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Strab.Domain.Entities;
 using Strab.Domain.Infra.Contexts;
+using Strab.Domain.Queries;
 using Strab.Domain.Repositories;
 
 namespace Strab.Domain.Infra.Repositories
@@ -33,9 +34,9 @@ namespace Strab.Domain.Infra.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAll()
         {
-            return _context.Users.AsNoTracking().Where(x => x.Active == true).OrderBy(x => x.Email);
+            return await _context.Users.AsNoTracking().Where(UserQueries.GetAllActive()).OrderBy(x => x.Email).ToListAsync();
         }
 
         public User GetById(long id)
@@ -43,12 +44,12 @@ namespace Strab.Domain.Infra.Repositories
             return _context.Users.FirstOrDefault(x => x.Id == id);
         }
 
-        public User Login(string email, string password)
+        public async Task<User> Login(string email, string password)
         {
-            return _context.Users
-            .AsNoTracking()
-            .Include(x => x.Role)
-            .FirstOrDefault(x => x.Email == email && x.Password == password);
+            return await _context.Users
+                .AsNoTracking()
+                .Include(x => x.Role)
+                .FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
         }
     }
 }
