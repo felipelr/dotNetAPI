@@ -17,6 +17,7 @@ public class UsersController : ControllerBase
     public async Task<ActionResult<IEnumerable<User>>> GetAll([FromServices] IUserRepository userRepository)
     {
         var users = await userRepository.GetAll();
+        Console.WriteLine("Users - " + users.Count());
         return Ok(users);
     }
 

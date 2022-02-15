@@ -29,7 +29,9 @@
         {
             "name": ".NET Core Attach",
             "type": "coreclr",
-            "request": "attach"
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Strab.Domain.Tests/bin/Debug/net6.0/Strab.Domain.Tests.dll",
         }
     ]
 }

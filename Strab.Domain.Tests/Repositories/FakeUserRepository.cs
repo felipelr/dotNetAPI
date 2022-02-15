@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Strab.Domain.Entities;
@@ -34,7 +35,7 @@ namespace Strab.Domain.Tests.Repositories
 
         public async Task<User> Login(string email, string password)
         {
-            return await Task.FromResult<User>(new User());
+            return await Task.FromResult<User>(new User(1, "felipe.lima.flr@gmail.com", "1234567890", "", "", true, DateTime.Now, DateTime.Now, new Role(1, "ADM", "ADM"), "", ""));
         }
     }
 }
