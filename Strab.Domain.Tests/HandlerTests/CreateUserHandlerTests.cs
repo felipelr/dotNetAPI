@@ -10,8 +10,8 @@ namespace Strab.Domain.Tests.HandlerTests;
 [TestClass]
 public class CreateUserHandlerTests
 {
-    private readonly CreateUserCommand _invalidCommand = new CreateUserCommand(new DTOs.Users.CreateUserDTO());
-    private readonly CreateUserCommand _validCommand = new CreateUserCommand(new DTOs.Users.CreateUserDTO(
+    private readonly CreateUserCommand _invalidCommand = new CreateUserCommand();
+    private readonly CreateUserCommand _validCommand = new CreateUserCommand(
         "Felipe",
         "42516423844",
         DateTime.Now.AddYears(-28),
@@ -24,10 +24,9 @@ public class CreateUserHandlerTests
         "1234567890",
         "",
         "",
-        2,
         "",
         "",
-        "professional"));
+        "professional");
 
     private readonly CreateUserHandler handler = new CreateUserHandler(
         new FakeUserRepository(),

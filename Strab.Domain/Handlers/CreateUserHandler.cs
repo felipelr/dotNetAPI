@@ -35,34 +35,34 @@ namespace Strab.Domain.Handlers
                 );
             }
 
-            int roleId = command.CreateUserDTO.UserType == "professional" ? 3 : 2;
+            int roleId = command.UserType == "professional" ? 3 : 2;
             Role role = _roleRepository.GetById(roleId);
 
             //criar usuario
             User user = new User(0,
-                command.CreateUserDTO.Email,
-                command.CreateUserDTO.Password,
-                command.CreateUserDTO.FacebookToken,
-                command.CreateUserDTO.GoogleToken,
+                command.Email,
+                command.Password,
+                command.FacebookToken,
+                command.GoogleToken,
                 true,
                 DateTime.Now,
                 DateTime.Now,
                 role,
-                command.CreateUserDTO.Platform,
-                command.CreateUserDTO.PlatformVersion
+                command.Platform,
+                command.PlatformVersion
             );
             _userRepository.Create(user);
 
             //criar client
             Client client = new Client(
                 0,
-                command.CreateUserDTO.Name,
-                command.CreateUserDTO.Document,
-                command.CreateUserDTO.Gender,
-                command.CreateUserDTO.Phone,
-                command.CreateUserDTO.Photo,
+                command.Name,
+                command.Document,
+                command.Gender,
+                command.Phone,
+                command.Photo,
                 true,
-                command.CreateUserDTO.DateBirth,
+                command.DateBirth,
                 0,
                 DateTime.Now,
                 DateTime.Now,
@@ -70,19 +70,19 @@ namespace Strab.Domain.Handlers
             );
             _clientRepository.Create(client);
 
-            if (command.CreateUserDTO.UserType == "professional")
+            if (command.UserType == "professional")
             {
                 //criar professional se requisitado
                 Professional professional = new Professional(
                     0,
-                    command.CreateUserDTO.Name,
-                    command.CreateUserDTO.Description,
-                    command.CreateUserDTO.Document,
-                    command.CreateUserDTO.Phone,
-                    command.CreateUserDTO.Photo,
-                    command.CreateUserDTO.BackImage,
+                    command.Name,
+                    command.Description,
+                    command.Document,
+                    command.Phone,
+                    command.Photo,
+                    command.BackImage,
                     true,
-                    command.CreateUserDTO.DateBirth,
+                    command.DateBirth,
                     0,
                     0,
                     DateTime.Now,
