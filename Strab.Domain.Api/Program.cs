@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Strab.Domain.Handlers;
 using System.Text.Json.Serialization;
-using Strab.Domain.Commands.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
