@@ -27,9 +27,14 @@ namespace Strab.Domain.Tests.Repositories
             return await Task.FromResult<IEnumerable<Client>>(new List<Client>());
         }
 
-        public Client GetById(long id)
+        public async Task<Client> GetById(long id)
         {
-            return new Client();
+            return await Task.FromResult<Client>(new Client());
+        }
+
+        public async Task<Client> GetByUserId(long userId)
+        {
+            return await Task.FromResult<Client>(new Client());
         }
     }
 }

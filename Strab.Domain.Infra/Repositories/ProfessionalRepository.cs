@@ -6,31 +6,12 @@ using Strab.Domain.Repositories;
 
 namespace Strab.Domain.Infra.Repositories
 {
-    public class ProfessionalRepository : IProfessionalRepository
+    public class ProfessionalRepository : BaseRepository<Professional>, IProfessionalRepository
     {
-        private readonly StrabContext _context;
-
-        public ProfessionalRepository(StrabContext context)
+        private StrabContext _context;
+        public ProfessionalRepository(StrabContext context) : base(context)
         {
             _context = context;
-        }
-
-        public void Create(Professional entity)
-        {
-            _context.Professionals.Add(entity);
-            _context.SaveChanges();
-        }
-
-        public void Update(Professional entity)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
-
-        public void Delete(Professional entity)
-        {
-            _context.Professionals.Remove(entity);
-            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<Professional>> GetAll()
@@ -38,9 +19,9 @@ namespace Strab.Domain.Infra.Repositories
             return await new Task<IEnumerable<Professional>>(() => _context.Professionals.AsNoTracking().Where(x => x.Active == true).OrderBy(x => x.Name));
         }
 
-        public Professional GetById(long id)
+        public async Task<Professional> GetByUserId(long userId)
         {
-            return _context.Professionals.FirstOrDefault(x => x.Id == id);
+            return await _context.Professionals.FirstOrDefaultAsync(x => x.UserId == userId);
         }
     }
 }

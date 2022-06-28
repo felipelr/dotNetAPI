@@ -6,31 +6,12 @@ using Strab.Domain.Repositories;
 
 namespace Strab.Domain.Infra.Repositories
 {
-    public class ClientRepository : IClientRepository
+    public class ClientRepository : BaseRepository<Client>, IClientRepository
     {
-        private readonly StrabContext _context;
-
-        public ClientRepository(StrabContext context)
+        StrabContext _context;
+        public ClientRepository(StrabContext context) : base(context)
         {
             _context = context;
-        }
-
-        public void Create(Client entity)
-        {
-            _context.Clients.Add(entity);
-            _context.SaveChanges();
-        }
-
-        public void Update(Client entity)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
-
-        public void Delete(Client entity)
-        {
-            _context.Clients.Remove(entity);
-            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<Client>> GetAll()
@@ -38,9 +19,9 @@ namespace Strab.Domain.Infra.Repositories
             return await new Task<IEnumerable<Client>>(() => _context.Clients.AsNoTracking().Where(x => x.Active == true).OrderBy(x => x.Name));
         }
 
-        public Client GetById(long id)
+        public async Task<Client> GetByUserId(long userId)
         {
-            return _context.Clients.FirstOrDefault(x => x.Id == id);
+            return await _context.Clients.FirstOrDefaultAsync(x => x.UserId == userId);
         }
     }
 }

@@ -27,9 +27,9 @@ namespace Strab.Domain.Tests.Repositories
             return await Task.FromResult<IEnumerable<Role>>(new List<Role>());
         }
 
-        public Role GetById(long id)
+        public async Task<Role> GetById(long id)
         {
-            return new Role(1, "", "");
+            return await Task.FromResult<Role>(new Role(1, "", ""));
         }
     }
 }

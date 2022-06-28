@@ -11,6 +11,7 @@ using Strab.Domain.Handlers;
 using Moq;
 using Strab.Domain.Repositories;
 using Strab.Domain.Entities;
+using Strab.Domain.Mappers;
 
 namespace Strab.Domain.Tests.ControllerTests;
 
@@ -48,19 +49,23 @@ public class UserControllerTests
     public async Task DadoAutenticacaoDeveRetornarStatus200()
     {
         var userRepository = new FakeUserRepository();
+        var clientRepository = new FakeClientRepository();
+        var professinalRepository = new FakeProfessionalRepository();
+        var mapper = new StrabMapperConfig();
+
         var userModel = new UserLogin()
         {
             Email = "felipe.lima.flr@gmail.com",
             Password = "1234567890",
         };
         var sut = new UsersController();
-        var actionResult = await sut.Authenticate(userRepository, userModel);
+        var actionResult = await sut.Authenticate(userRepository, clientRepository, professinalRepository, mapper, userModel);
         var result = actionResult.Result as OkObjectResult;
         Assert.AreEqual(result?.StatusCode, 200);
     }
 
     [TestMethod]
-    public void DadoCriacaoUsuarioProfissionalDeveRetornarStatus200()
+    public async Task DadoCriacaoUsuarioProfissionalDeveRetornarStatus200()
     {
         var userRepository = new FakeUserRepository();
         var roleRepository = new FakeRoleRepository();
@@ -69,13 +74,13 @@ public class UserControllerTests
         var createUserHandler = new CreateUserHandler(userRepository, roleRepository, clientRepository, professionalRepository);
 
         var sut = new UsersController();
-        var actionResult = sut.Create(createUserHandler, _validCreateUserProfessionalCommand);
+        var actionResult = await sut.Create(createUserHandler, _validCreateUserProfessionalCommand);
         var result = actionResult.Result as OkObjectResult;
         Assert.AreEqual(result?.StatusCode, 200);
     }
 
     [TestMethod]
-    public void DadoCriacaoUsuarioClientDeveRetornarStatus200()
+    public async Task DadoCriacaoUsuarioClientDeveRetornarStatus200()
     {
         var userRepository = new FakeUserRepository();
         var roleRepository = new FakeRoleRepository();
@@ -84,7 +89,7 @@ public class UserControllerTests
         var createUserHandler = new CreateUserHandler(userRepository, roleRepository, clientRepository, professionalRepository);
 
         var sut = new UsersController();
-        var actionResult = sut.Create(createUserHandler, _validCreateUserClientCommand);
+        var actionResult = await sut.Create(createUserHandler, _validCreateUserClientCommand);
         var result = actionResult.Result as OkObjectResult;
         Assert.AreEqual(result?.StatusCode, 200);
     }

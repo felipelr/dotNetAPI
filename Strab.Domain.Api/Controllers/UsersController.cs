@@ -7,6 +7,8 @@ using Strab.Domain.Api.Models;
 using Strab.Domain.Handlers;
 using Strab.Domain.Commands.Users;
 using Strab.Domain.Commands;
+using Strab.Domain.Mappers.Interfaces;
+using Strab.Domain.Dtos;
 
 namespace Strab.Domain.Api.Controllers;
 
@@ -20,6 +22,9 @@ public class UsersController : ControllerBase
     [AllowAnonymous]
     public async Task<ActionResult<dynamic>> Authenticate(
                     [FromServices] IUserRepository userRepository,
+                    [FromServices] IClientRepository clientRepository,
+                    [FromServices] IProfessionalRepository professinalRepository,
+                    [FromServices] IMapperConfig mapper,
                     [FromBody] UserLogin model)
     {
         var user = await userRepository.Login(model.Email, model.Password);
@@ -28,12 +33,17 @@ public class UsersController : ControllerBase
             return NotFound(new { message = "Usuário e/ou senha inválidos" });
 
         var token = TokenService.GenerateToken(user);
-        // Esconde a senha
-        user.ClearPassword();
+
+        var userDTO = mapper.GetMapper().Map<UserDTO>(user);
+        if (userDTO != null)
+        {
+            userDTO.Client = mapper.GetMapper().Map<ClientDTO>(await clientRepository.GetByUserId(userDTO.Id));
+            userDTO.Professional = mapper.GetMapper().Map<ProfessionalDTO>(await professinalRepository.GetByUserId(userDTO.Id));
+        }
 
         return Ok(new
         {
-            user = user,
+            user = userDTO,
             token = token
         });
     }
@@ -49,7 +59,7 @@ public class UsersController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "ADM")]
-    public ActionResult<dynamic> Create(
+    public async Task<ActionResult<dynamic>> Create(
                     [FromServices] CreateUserHandler createUserHandler,
                     [FromBody] CreateUserCommand createUserCommand)
     {
@@ -57,7 +67,7 @@ public class UsersController : ControllerBase
         if (createUserCommand == null)
             return BadRequest(new { message = "Informações inválidas" });
 
-        var result = (GenericCommandResult)createUserHandler.Handle(createUserCommand);
+        var result = (GenericCommandResult)await createUserHandler.Handle(createUserCommand);
 
         return Ok(result);
     }

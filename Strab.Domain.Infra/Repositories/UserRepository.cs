@@ -7,43 +7,18 @@ using Strab.Domain.Repositories;
 
 namespace Strab.Domain.Infra.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
         private readonly StrabContext _context;
 
-        public UserRepository(StrabContext context)
+        public UserRepository(StrabContext context) : base(context)
         {
             _context = context;
-        }
-
-        public void Create(User entity)
-        {
-            _context.Users.Add(entity);
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(entity.Password);
-            entity.SetHashedPassword(passwordHash);
-            _context.SaveChanges();
-        }
-
-        public void Update(User entity)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
-
-        public void Delete(User entity)
-        {
-            _context.Users.Remove(entity);
-            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<User>> GetAll()
         {
             return await _context.Users.AsNoTracking().Where(UserQueries.GetAllActive()).OrderBy(x => x.Email).ToListAsync();
-        }
-
-        public User GetById(long id)
-        {
-            return _context.Users.FirstOrDefault(x => x.Id == id);
         }
 
         public async Task<User> Login(string email, string password)

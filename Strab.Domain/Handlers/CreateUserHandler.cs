@@ -23,7 +23,7 @@ namespace Strab.Domain.Handlers
             _professionalRepository = professionalRepository;
         }
 
-        public ICommandResult Handle(CreateUserCommand command)
+        public async Task<ICommandResult> Handle(CreateUserCommand command)
         {
             command.Validate();
             if (!command.IsValid)
@@ -36,7 +36,7 @@ namespace Strab.Domain.Handlers
             }
 
             int roleId = command.UserType == "professional" ? 3 : 2;
-            Role role = _roleRepository.GetById(roleId);
+            Role role = await _roleRepository.GetById(roleId);
 
             //criar usuario
             User user = new User(0,

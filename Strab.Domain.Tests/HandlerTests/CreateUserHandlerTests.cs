@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Strab.Domain.Commands;
 using Strab.Domain.Commands.Users;
@@ -41,16 +42,16 @@ public class CreateUserHandlerTests
     }
 
     [TestMethod]
-    public void DadoUmComandoInvalidoDeveInterromperarAExecucao()
+    public async Task DadoUmComandoInvalidoDeveInterromperarAExecucao()
     {
-        var result = (GenericCommandResult)handler.Handle(_invalidCommand);
+        var result = (GenericCommandResult)await handler.Handle(_invalidCommand);
         Assert.AreEqual(result.Success, false);
     }
 
     [TestMethod]
-    public void DadoUmComandoValidoDeveCriarOUsuario()
+    public async Task DadoUmComandoValidoDeveCriarOUsuario()
     {
-        var result = (GenericCommandResult)handler.Handle(_validCommand);
+        var result = (GenericCommandResult)await handler.Handle(_validCommand);
         Assert.AreEqual(result.Success, true);
     }
 }

@@ -1,13 +1,15 @@
-using Strab.Domain.Infra.Contexts;
-using Microsoft.EntityFrameworkCore;
-using Strab.Domain.Repositories;
-using Strab.Domain.Infra.Repositories;
 using System.Text;
-using Strab.Domain.Api;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
+using Strab.Domain.Infra.Contexts;
+using Strab.Domain.Repositories;
+using Strab.Domain.Infra.Repositories;
+using Strab.Domain.Api;
 using Strab.Domain.Handlers;
-using System.Text.Json.Serialization;
+using Strab.Domain.Mappers.Interfaces;
+using Strab.Domain.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +47,9 @@ builder.Services.AddTransient<IRoleRepository, RoleRepository>();
 builder.Services.AddTransient<IClientRepository, ClientRepository>();
 builder.Services.AddTransient<IProfessionalRepository, ProfessionalRepository>();
 
+//dependencias do mapper
+builder.Services.AddTransient<IMapperConfig, StrabMapperConfig>();
+
 //dependencias dos handlers
 builder.Services.AddTransient<CreateUserHandler, CreateUserHandler>();
 
@@ -60,6 +65,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//configuração apenas pra funcionar em localhost
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseHttpsRedirection();
 

@@ -28,9 +28,9 @@ namespace Strab.Domain.Tests.Repositories
             return await Task.FromResult<IEnumerable<User>>(new List<User>());
         }
 
-        public User GetById(long id)
+        public async Task<User> GetById(long id)
         {
-            return new User();
+            return await Task.FromResult<User>(new User());
         }
 
         public async Task<User> Login(string email, string password)
